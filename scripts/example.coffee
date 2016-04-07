@@ -11,7 +11,11 @@
 module.exports = (robot) ->
 
   self = (res) ->
-    return res.message.user.name == robot.name;
+    if robot.name = res.message.user.name
+      return true
+    if robot.room = res.message.user.name
+      return true
+    return false
 
   robot.hear /badger/i, (res) ->
     res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS..."
@@ -19,6 +23,7 @@ module.exports = (robot) ->
   robot.hear /possum/i, (res) ->
     if self(res)
       return
+    console.log res
     res.send "Possums are awesome, don't mock possums"
   
   robot.respond /open the (.*) doors/i, (res) ->
