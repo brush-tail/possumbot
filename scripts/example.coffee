@@ -10,18 +10,23 @@
 
 module.exports = (robot) ->
 
-  robot.hear /badger/i, (res) ->
-    res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
+  self = (res) ->
+    return res.message.user.name == robot.name;
 
-  robot.respond /possum/i, (res) ->
+  robot.hear /badger/i, (res) ->
+    res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS..."
+
+  robot.hear /possum/i, (res) ->
+    if self(res)
+      return
     res.send "Possums are awesome, don't mock possums"
-  #
-  # robot.respond /open the (.*) doors/i, (res) ->
-  #   doorType = res.match[1]
-  #   if doorType is "pod bay"
-  #     res.reply "I'm afraid I can't let you do that."
-  #   else
-  #     res.reply "Opening #{doorType} doors"
+  
+  robot.respond /open the (.*) doors/i, (res) ->
+    doorType = res.match[1]
+    if doorType is "pod bay"
+      res.reply "I'm afraid I can't let you do that."
+    else
+      res.reply "Opening #{doorType} doors"
   #
   # robot.hear /I like pie/i, (res) ->
   #   res.emote "makes a freshly baked pie"
