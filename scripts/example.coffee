@@ -9,7 +9,7 @@
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
 
 module.exports = (robot) ->
-
+  # Check if bot said it
   self = (res) ->
     if robot.name = res.message.user.name
       return true
