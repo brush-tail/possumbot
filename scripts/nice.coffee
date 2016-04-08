@@ -1,3 +1,15 @@
+# Description:
+#   Says nice things
+#
+# Dependencies:
+#   None
+#
+# Configuration:
+#   None
+#
+# Commands:
+#   hubot flatter <person> - Says something nice about a person
+
 thoughts = require '../modules'
 
 messages = [
