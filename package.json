@@ -5,6 +5,8 @@
   "author": "Evan Lomas <zeus3rd@gmail.com>",
   "description": "Brushtail Slackbot",
   "dependencies": {
+    "firebase": "^2.4.2",
+    "firebase-token-generator": "^2.0.0",
     "hubot": "^2.18.0",
     "hubot-diagnostics": "0.0.1",
     "hubot-google-images": "^0.2.6",
