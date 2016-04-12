@@ -7,6 +7,8 @@ module.exports = (robot) =>
 
   fb = new Firebase process.env.FIREBASE_URL
 
+  robot.messageRoom 'vectic-watch', 'Attempting to connect to Firebase'
+
   fb.authWithCustomToken process.env.FIREBASE_TOKEN, (error, authData) ->
     if error
       return robot.messageRoom 'vectic-watch', 'Unable to authenticate with firebase'
