@@ -1,24 +1,27 @@
 Firebase = require 'firebase'
 FirebaseTokenGen = require 'firebase-token-generator'
+url = process.env.FIREBASE_URL
+token = process.env.FIREBASE_TOKEN
+room = process.env.FIREBASE_ROOM
 
 module.exports = (robot) =>
-  if !process.env.FIREBASE_URL || !process.env.FIREBASE_TOKEN
-    if(process.env.FIREBASE_ROOM)
-      robot.messageRoom process.env.FIREBASE_ROOM, 'My Firebase credentials missing :('
+  if !url || !token
+    if(room)
+      robot.messageRoom room, 'My Firebase credentials missing :('
     return
 
-  fb = new Firebase process.env.FIREBASE_URL
+  fb = new Firebase url
 
-  robot.messageRoom 'vectic-watch', 'Attempting to connect to Firebase'
+  robot.messageRoom room, 'Attempting to connect to Firebase'
 
-  fb.authWithCustomToken process.env.FIREBASE_TOKEN, (error, authData) ->
+  fb.authWithCustomToken token, (error, authData) ->
     if error
-      return robot.messageRoom 'vectic-watch', 'Unable to authenticate with firebase'
+      return robot.messageRoom room, 'Unable to authenticate with firebase'
     else
-      robot.messageRoom 'vectic-watch', 'Firebase Authenticated'
+      robot.messageRoom room, 'Firebase Authenticated'
 
     fb.child('vectic').on 'child_added', (ssVectic) =>
       data = ssVectic.val()
       dataString = JSON.stringify data
 
-      robot.messageRoom 'vectic-watch', dataString
+      robot.messageRoom room, dataString
