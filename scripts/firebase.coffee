@@ -1,9 +1,11 @@
-Firbase = require 'firebase'
+Firebase = require 'firebase'
 FirebaseTokenGen = require 'firebase-token-generator'
 
 module.exports = (robot) =>
   if !process.env.FIREBASE_URL || !process.env.FIREBASE_TOKEN
-    return robot.messageRoom 'vectic-watch', 'My Firebase credentials missing :('
+    if(process.env.FIREBASE_ROOM)
+      robot.messageRoom process.env.FIREBASE_ROOM, 'My Firebase credentials missing :('
+    return
 
   fb = new Firebase process.env.FIREBASE_URL
 
