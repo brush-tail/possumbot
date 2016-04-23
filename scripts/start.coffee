@@ -1,13 +1,14 @@
 thoughts = require('../modules')
 
-room = process.env.NOTIFICATION_ROOM || 'evan'
+room = process.env.NOTIFICATION_ROOM
 
 module.exports = (robot) =>
-  console.log('------------')
-  console.log('robot',robot)
-  console.log('robot.adapter.message',robot.adapter.message)
-  console.log('robot.adapter.robot',robot.adapter.robot)
-  robot.messageRoom room, "Fubar!"
+  # console.log('------------')
+  # console.log('robot',robot)
+  # console.log('robot.adapter.message',robot.adapter.message)
+  # console.log('robot.adapter.robot',robot.adapter.robot)
+  if room
+    robot.messageRoom room, robot.name+" woke up!"
   # robot.messageRoom room, "<https://github.com/link/to/a/PR|myrepo #42> fix some broken"
   
   # robot.messageRoom {room: room, text: "<https://github.com/link/to/a/PR|myrepo #42> fix some broken"}
