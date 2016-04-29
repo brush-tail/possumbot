@@ -8,25 +8,57 @@
 #   None
 #
 # Commands:
-#   hubot tally {p1} beat {p2}
+#   hubot tally {p1} beat {p2} - Adds +1 to tally for player on left
+#   hubot tally players - Returns all results for all players
 
 module.exports = (robot) ->
-  robot.respond /tally (.*) beat (.*)/, (res) ->
-    winner = res.match[1]
-    loser = res.match[2]
+  robot.respond /tally (.*) beat (.*)/i, (res) ->
+    p1 = res.match[1]
+    p2 = res.match[2]
     #score = res.match[3]    # TODO: Keep a list of scores
 
-    key1 = winner+'^'+loser
-    key2 = loser+'^'+winner
+    key1 = 'tally_'+p1+'^'+p2
+    key2 = 'tally_'+p2+'^'+p1
     count       = robot.brain.get(key1) || 0
     othercount  = robot.brain.get(key2) || 0
 
     count += 1
-    robot.brain.set key1, count
+    robot.brain.set 'tally_'+key1, count
 
-    res.send winner + " vs " + loser + ": " + count + " to " + othercount
+    players = robot.brain.get('tally_players') || []
 
-    # unless answer?
-    #   res.send "Missing HUBOT_ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE_THE_UNIVERSE_AND_EVERYTHING in environment: please set and try again"
-    #   return
-    # res.send "#{answer}, but what is the question?"
+    if players.indexOf p1 < 0
+      players.push p1
+    if players.indexOf p2 < 0
+      players.push p2
+    robot.brain.set 'tally_players', players
+
+    res.send p1 + " vs " + p2 + ": " + count + " to " + othercount
+
+  robot.respond /tally players/i, (res) ->
+    tally = 'Players stored are:'
+    players = robot.brain.get('tally_players') || []
+
+    completed = {}
+
+    i1 = 0
+    i2 = 0
+    while i1 < players.length
+      i1++
+      p1 = players[i1]
+      while i2 < players.length
+        i2++
+        p2 = players[i2]
+        if p1 == p2
+          continue
+        if completed[p1+'_'+p2] || completed[p2+'_'+p1]
+          continue
+
+        key1 = 'tally_'+p1+'^'+p2
+        key2 = 'tally_'+p2+'^'+p1
+        count1 = robot.brain.get(key1) || 0
+        count2 = robot.brain.get(key2) || 0
+        tally += '\n' + p1 + ' vs ' + p2 + ': ' + count1 + ' to ' + count2
+        completed[p1+'_'+p2] = true
+
+    res.send tally
