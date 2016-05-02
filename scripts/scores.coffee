@@ -10,6 +10,7 @@
 # Commands:
 #   hubot tally {p1} beat {p2} - Adds +1 to tally for player on left
 #   hubot tally players - Returns all results for all players
+#   hubot tally clear - Clears all results from memory
 
 module.exports = (robot) ->
   robot.respond /tally (.*) beat (.*)/i, (res) ->
@@ -62,3 +63,19 @@ module.exports = (robot) ->
         completed[p1+'_'+p2] = true
 
     res.send tally
+
+  robot.respond /tally clear/i, (res) ->
+    players = robot.brain.get('tally_players') || []
+    i1 = 0
+    i2 = 0
+    while i1 < players.length
+      i1++
+      p1 = players[i1]
+      while i2 < players.length
+        i2++
+        p2 = players[i2]
+        key = 'tally_'+p1+'^'+p2
+        robot.brain.set key, null
+    robot.brain.set 'tally_players', []
+
+    res.send "I've totally forgotten everything"
