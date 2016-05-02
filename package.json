@@ -11,7 +11,7 @@
     "hubot": "^2.18.0",
     "hubot-brain-inspect": "0.0.1",
     "hubot-diagnostics": "0.0.1",
-    "hubot-disbot": "^0.1.3",
+    "hubot-discord": "^1.1.0",
     "hubot-google-images": "^0.2.6",
     "hubot-google-translate": "^0.2.0",
     "hubot-help": "^0.1.3",
