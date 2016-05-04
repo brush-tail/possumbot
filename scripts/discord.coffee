@@ -6,8 +6,6 @@ noticeRoom = process.env.NOTIFICATION_ROOM
 discord = new Discord.Client()
 discord.login process.env.DISCORD_EMAIL, process.env.DISCORD_PASSWORD
 
-console.log 'discord',discord
-
 module.exports = (robot) ->
   discord.on 'ready', () ->
     robot.messageRoom noticeRoom, robot.name+" has connected to discord as "+process.env.DISCORD_EMAIL

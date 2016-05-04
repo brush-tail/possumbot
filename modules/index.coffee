@@ -3,3 +3,5 @@ module.exports.self = (robot,res) =>
   if robot.name = res.message.user.name
     return true
   return false
+
+  module.exports.syno = require './syno.coffee'

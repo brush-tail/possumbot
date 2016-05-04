@@ -34,20 +34,7 @@ module.exports = (robot) =>
 
       robot.messageRoom room, dataString
 
-  # Receive watching commands
-  robot.hear /test1/i, (res) ->
-    robot.brain.set 'fubar', {test:'wee',fubar:'awww'}
-
-  robot.hear /test2/i, (res) ->
-    console.log robot.brain.get 'fubar'
-    console.log robot.brain.get 'wee'
-
-  robot.hear /test3/i, (res) ->
-    robot.brain.set 'wee', 'grr'
-
-
   robot.respond /firebase (.*) into (.*)/i, (res) ->
-    console.log('res.match',res.match)
     path = res.match[1]
     room = res.match[2]
 
